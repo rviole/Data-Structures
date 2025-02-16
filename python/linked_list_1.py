@@ -72,7 +72,8 @@ class LinkedList:
 if __name__ == "__main__":
     # Create a Linked List with initial value of 5
     ll = LinkedList(1)
-    # print(ll, "\n")
+    print(ll)
+    
     ll.append(0)
     ll.append(7)
     ll.append(8)
@@ -82,10 +83,15 @@ if __name__ == "__main__":
     print(f"Third Element: {ll.get(2)}")
     print(f"Fourth Element: {ll.get(3)}")
     print("-" * 25)
+    
     print("Link List Visualization:\n")
     print(ll, "\n")
-    # ll.delete(0)
-    # ll.delete(3)
-    # print(ll, "\n")
-    # ll.delete(10)
-    # print(ll, "\n")
+    
+    ll.delete(0)
+    print("Element 0 is removed:\n", ll, "\n")
+    
+    ll.delete(2)
+    print("Element 2 is removed:\n", ll, "\n")
+    
+    ll.delete(10)
+    print("Element 10 is removed:\n", ll, "\n")
