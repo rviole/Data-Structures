@@ -7,6 +7,7 @@ class Node:
 class LinkedList:
     def __init__(self):
         self.head = None
+        self.tail = None
 
     def __str__(self):
         if self.head is None:
@@ -21,14 +22,20 @@ class LinkedList:
 
     def append(self, data):
         if self.head is None:
+            # if the linked list is empty, the first element is both head and tail
             self.head = Node(data)
+            self.tail = self.head
         else:
-            last_node = self.head
+            # last_node = self.head
 
-            # in loop
-            while last_node.next:
-                last_node = last_node.next
-            last_node.next = Node(data)
+            # # in loop
+            # while last_node.next:
+            #     last_node = last_node.next
+
+            # last_node.next = self.tail = Node(data)
+            
+            self.tail.next = Node(data)
+            self.tail = self.tail.next            
 
     def get(self, index):
         if self.head is None:
@@ -60,7 +67,7 @@ class LinkedList:
             self.head = self.head.next or None
             return
 
-        node = self.head
+        previous = self.head
 
         # while True:
         #     if i == index-1:
@@ -72,10 +79,11 @@ class LinkedList:
         #     i += 1
 
         for _ in range(index - 1):
-            if node.next is None:
+            if previous.next is None:
                 return None
 
-            node = node.next
+            previous = previous.next
+            
 
         # Explanation
         # there are 3 nodes we think about:
@@ -84,13 +92,18 @@ class LinkedList:
         # if the next node is not none, it works. otherwise we link prev node to None
         # node.next = node.next.next
 
-        if node.next is not None:
+        if previous.next is not None:
             # node is 100% not none (ensured in the loop)
             # node.next might be None, so we might not access node.next.next
             # so we check it.
-            node.next = node.next.next
+            previous.next = previous.next.next
+            
+            # if we removed the last node, previous one becomes the tail
+            if previous.next is None:
+                self.tail = previous            
         else:
-            node.next = None
+            previous.next = None
+            self.tail = previous
 
 
 if __name__ == "__main__":
@@ -100,7 +113,11 @@ if __name__ == "__main__":
     ll.append(10)
     ll.append(9)
     ll.append(8)
-    ll.append(7)
+    ll.append(6)
+    ll.append(5)
+    ll.append(4)
+    ll.append(2)
+    ll.append(1)
     print(ll)
 
     # print(f"Head Element: {ll.get(0)}")
@@ -113,9 +130,15 @@ if __name__ == "__main__":
 
     ll.delete(0)
     print("Element 0 is removed:", ll)
-
-    ll.delete(0)
+    print(ll.head.data, ll.tail.data)
+    
+    ll.delete(4)
     print("Element 0 is removed:", ll)
+    print(ll.head.data, ll.tail.data)
+    
+    ll.delete(5)
+    print("Element 0 is removed:", ll)
+    print(ll.head.data, ll.tail.data)
 
     # ll.delete(10)
     # print("Element 10 is removed:\n", ll, "\n")
